@@ -12,8 +12,7 @@ data class TaskCacheEntity(
     val id: Int,
     val title: String,
     val category: String,
-    val color: String,
-    @Embedded val date: Date,
+   val date: String,
     val priority: String,
     val time: String,
 

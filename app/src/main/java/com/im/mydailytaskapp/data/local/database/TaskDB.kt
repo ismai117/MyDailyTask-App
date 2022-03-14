@@ -9,7 +9,7 @@ import com.im.mydailytaskapp.data.local.task.TaskDao
 
 @Database(
     entities = [CategoriesCacheEntity::class, TaskCacheEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class TaskDB : RoomDatabase() {

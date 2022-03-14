@@ -8,9 +8,8 @@ data class Task(
     val id: Int,
     val title: String,
     val category: String,
-    val color: String,
-    val date: Date,
     val priority: String,
+    val date: String,
     val time: String,
 
     )

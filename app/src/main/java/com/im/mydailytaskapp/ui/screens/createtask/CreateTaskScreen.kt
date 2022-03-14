@@ -2,6 +2,7 @@ package com.im.mydailytaskapp.ui.screens.createtask
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,10 +24,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.im.mydailytaskapp.domain.categories.Categories
+import com.im.mydailytaskapp.domain.task.Task
 import com.im.mydailytaskapp.ui.screens.task.TaskViewModel
 import com.im.mydailytaskapp.ui.theme.Fonts
 import com.im.mydailytaskapp.ui.utils.Constants.High
 import com.im.mydailytaskapp.ui.utils.Constants.Low
+import com.im.mydailytaskapp.ui.utils.Screen
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,10 +56,12 @@ fun CreateTaskScreen(
         },
         content = {
             CreateTaskContent(
+                navController,
                 scrollState,
                 categories,
                 title,
                 openDialog,
+                taskViewModel,
                 activity,
             )
         },
@@ -120,10 +125,12 @@ private fun CreateTaskAppBar(navController: NavController) {
 
 @Composable
 private fun CreateTaskContent(
+    navController: NavController,
     scrollState: ScrollState,
     categories: List<Categories>,
     title: MutableState<String>,
     openDialog: MutableState<Boolean>,
+    taskViewModel: TaskViewModel,
     activity: AppCompatActivity,
 ) {
 
@@ -368,16 +375,35 @@ private fun CreateTaskContent(
                 onClick = {
 
                     if (
-                        title.value == "" &&
-                        selectedCategrory.value == "" &&
-                        selectedPriority.value == "" &&
-                        pickedDate == "" &&
+                        title.value == "" ||
+                        selectedCategrory.value == "" ||
+                        selectedPriority.value == "" ||
+                        pickedDate == "" ||
                         pickedTime == ""
                     ) {
-                        Log.d("Tasks", "Task created")
+                        Toast.makeText(activity, "not created", Toast.LENGTH_LONG).show()
                     } else {
 
+                        Toast.makeText(activity, "created", Toast.LENGTH_LONG).show()
+
                         Log.d("Tasks", "\n${title.value}\n${selectedCategrory.value}\n${selectedPriority.value}\n$pickedDate\n$pickedTime")
+
+                        val task = pickedDate?.let {
+                            pickedTime?.let { it1 ->
+                                Task(
+                                    id = 0,
+                                    title = title.value,
+                                    category = selectedCategrory.value,
+                                    priority = selectedPriority.value,
+                                    date = it,
+                                    time = it1,
+                                )
+                            }
+                        }
+
+                        task?.let { taskViewModel.insertTask(task = it) }
+
+                        navController.navigate(Screen.HomeScreen.route)
 
                     }
 

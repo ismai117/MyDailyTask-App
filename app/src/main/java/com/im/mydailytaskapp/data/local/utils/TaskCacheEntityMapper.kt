@@ -14,7 +14,6 @@ class TaskCacheEntityMapper : EntityMapper<TaskCacheEntity, Task> {
         return Task(
             id = entity.id,
             category = entity.category,
-            color = entity.color,
             title =  entity.title,
             date = entity.date,
             time = entity.time,
@@ -26,7 +25,6 @@ class TaskCacheEntityMapper : EntityMapper<TaskCacheEntity, Task> {
         return TaskCacheEntity(
             id = model.id,
             category = model.category,
-            color = model.color,
             title =  model.title,
             date = model.date,
             time = model.time,
