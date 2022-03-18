@@ -55,15 +55,17 @@ fun CreateTaskScreen(
             CreateTaskAppBar(navController = navController)
         },
         content = {
-            CreateTaskContent(
-                navController,
-                scrollState,
-                categories,
-                title,
-                openDialog,
-                taskViewModel,
-                activity,
-            )
+            categories.tasks?.let { it1 ->
+                CreateTaskContent(
+                    navController,
+                    scrollState,
+                    it1,
+                    title,
+                    openDialog,
+                    taskViewModel,
+                    activity,
+                )
+            }
         },
         backgroundColor = Color.Transparent,
     )

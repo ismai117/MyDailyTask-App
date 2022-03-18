@@ -13,8 +13,8 @@ constructor(
     private val taskCacheEntityMapper: TaskCacheEntityMapper,
 ) : TaskRepository {
 
-    override fun getTasks(): Flow<List<Task>> {
-        return taskCacheEntityMapper.fromEntityFlowList(taskDao.getTasks())
+    override fun getTasks(category: String): Flow<List<Task>> {
+        return taskCacheEntityMapper.fromEntityFlowList(taskDao.getTasks(category))
     }
 
     override suspend fun insertTask(task: Task) {

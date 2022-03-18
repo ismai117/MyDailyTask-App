@@ -2,14 +2,17 @@ package com.im.mydailytaskapp.ui.utils
 
 import com.im.mydailytaskapp.domain.task.Task
 
-sealed class ViewState(){
+sealed class ViewState<T>(
+    val tasks: T? = null,
+    val throwable: Throwable? = null
+){
 
-    class Success(tasks: List<Task>) : ViewState()
+    class Success<T>(tasks: T?) : ViewState<T>(tasks)
 
-    class Error(throwable: Throwable) : ViewState()
+    class Error<T>(throwable: Throwable, tasks: T? = null) : ViewState<T>(tasks, throwable)
 
-    class Loading() : ViewState()
+    class Loading<T>: ViewState<T>()
 
-    class Empty() : ViewState()
+    class Empty<T> : ViewState<T>()
 
 }

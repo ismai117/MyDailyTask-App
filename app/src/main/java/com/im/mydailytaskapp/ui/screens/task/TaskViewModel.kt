@@ -3,6 +3,7 @@ package com.im.mydailytaskapp.ui.screens.task
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.im.mydailytaskapp.domain.categories.Categories
 import com.im.mydailytaskapp.domain.task.Task
 import com.im.mydailytaskapp.repository.task.TaskRepository_Impl
 import com.im.mydailytaskapp.ui.utils.ViewState
@@ -23,14 +24,10 @@ constructor(
     private val taskRepositoryImpl: TaskRepository_Impl,
 ) : ViewModel() {
 
-    private val _tasks = MutableStateFlow<ViewState>(ViewState.Success(emptyList()))
-    val tasks: StateFlow<ViewState> = _tasks
+    private val _tasks = MutableStateFlow<ViewState<List<Task>>>(ViewState.Success(null))
+    val tasks: StateFlow<ViewState<List<Task>>> = _tasks
 
-    init {
-        getTasks()
-    }
-
-    private fun getTasks() {
+    fun getTasks(category: String) {
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -38,7 +35,7 @@ constructor(
 
             try {
 
-                taskRepositoryImpl.getTasks().collect {
+                taskRepositoryImpl.getTasks(category = category).collect {
 
                     if (it.isNullOrEmpty()) {
 

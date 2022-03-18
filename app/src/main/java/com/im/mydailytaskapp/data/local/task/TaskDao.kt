@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TaskDao {
 
-    @Query("SELECT * FROM tasks_table")
-    fun getTasks(): Flow<List<TaskCacheEntity>>
+    @Query("SELECT * FROM tasks_table WHERE category = :category")
+    fun getTasks(category: String): Flow<List<TaskCacheEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(taskCacheEntity: TaskCacheEntity)

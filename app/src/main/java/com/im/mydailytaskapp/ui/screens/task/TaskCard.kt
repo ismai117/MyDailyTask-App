@@ -12,64 +12,49 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.im.mydailytaskapp.domain.task.Task
 import com.im.mydailytaskapp.ui.theme.Fonts
 
 
 @Composable
 fun TaskCard(
-
+    task: Task
 ) {
 
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = 8.dp,
+        elevation = 12.dp,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .height(50.dp)
                 .padding(8.dp)
         ) {
             Text(
-                text = "Gym Session",
+                text = "${task.title}",
                 style = TextStyle(
                     color = Color.Black,
                     fontSize = 18.sp,
                     fontFamily = Fonts
                 ),
                 modifier = Modifier
-                    .padding(top = 8.dp, start = 12.dp)
-                    .align(Alignment.TopStart)
+                    .padding(start = 12.dp)
+                    .align(Alignment.CenterStart)
             )
             Text(
-                text = "10:00 AM",
+                text = "${task.time}",
                 style = TextStyle(
                     color = Color.Black,
                     fontFamily = Fonts
                 ),
                 modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(top = 8.dp, end = 12.dp)
-            )
-            Text(
-                text = "Hoteps BEEN Told You 194 - Bryce Mitchell ",
-                style = TextStyle(
-                    color = Color.Black,
-                    fontFamily = Fonts
-                ),
-                modifier = Modifier
-                    .width(250.dp)
-                    .padding(top = 50.dp, start = 12.dp, bottom = 8.dp)
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 12.dp)
             )
         }
     }
 
 }
 
-
-@Preview
-@Composable
-fun ShowDefault() {
-    TaskCard()
-}
